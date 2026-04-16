@@ -1,25 +1,30 @@
-//your JS code here. If required.
-// Get elements
-const select = document.getElementById("languageSelect");
-const button = document.getElementById("saveBtn");
-const output = document.getElementById("output");
+const message = document.getElementById("message");
 
-// Save language in sessionStorage
-button.addEventListener("click", function () {
-    const selectedLang = select.value;
-
-    if (selectedLang) {
-        sessionStorage.setItem("preferredLanguage", selectedLang);
-        output.innerText = "Saved: " + selectedLang;
-    }
-});
+// Language messages
+const translations = {
+    English: "Hello World",
+    Spanish: "Hola Mundo",
+    French: "Bonjour le monde"
+};
 
 // Load saved language on page load
 window.onload = function () {
-    const savedLang = sessionStorage.getItem("preferredLanguage");
+    const savedLang = sessionStorage.getItem("language");
 
     if (savedLang) {
-        select.value = savedLang;
-        output.innerText = "Previously selected: " + savedLang;
+        message.innerText = translations[savedLang];
+    } else {
+        message.innerText = translations["English"];
     }
 };
+
+// Function to set language
+function setLanguage(lang) {
+    sessionStorage.setItem("language", lang);
+    window.location.href = "index.html"; // redirect
+}
+
+// Button events
+document.getElementById("englishBtn").onclick = () => setLanguage("English");
+document.getElementById("spanishBtn").onclick = () => setLanguage("Spanish");
+document.getElementById("frenchBtn").onclick = () => setLanguage("French");
